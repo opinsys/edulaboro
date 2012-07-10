@@ -8,8 +8,13 @@
       "backbone": ""
       , "coffee-script": ""
       , "express": ""
-      , "stylus": ""
+      , "handlebars": ""
+      , "hbs": ""
       , "nib": ""
+      , "piler": ""
+      , "socket.io": ""
+      , "stylus": ""
+      , "underscore": ""
 
   }
 }
