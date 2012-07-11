@@ -19,6 +19,3 @@ module.exports = (app) ->
 	app.get "/", (req, res) ->
 		res.render "index",
       clientTemplates: readTemplateStrings()
-
-	# app.get "/subview", (req, res) ->
-	# 	res.render "subview", title: "Subview"

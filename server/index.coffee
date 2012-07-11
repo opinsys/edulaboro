@@ -36,10 +36,9 @@ app.configure ->
   js.addFile rootDir + "/client/helpers.coffee"
   js.addFile rootDir + "/client/models.coffee"
   js.addFile rootDir + "/client/baseview.coffee"
-  js.addFile rootDir + "/client/views/button.coffee"
   js.addFile rootDir + "/client/views/editor.coffee"
+  js.addFile rootDir + "/client/views/topmenu.coffee"
   js.addFile rootDir + "/client/main.coffee"
-  css.addFile rootDir + "/client/styles/layout.styl"
 
   css.addFile rootDir + "/public/vendor/bootstrap/css/bootstrap.min.css"
   css.addFile rootDir + "/public/vendor/bootstrap/css/bootstrap-responsive.min.css"
@@ -48,6 +47,8 @@ app.configure ->
   js.addFile rootDir + "/public/vendor/bootstrap/js/bootstrap.min.js"
   js.addFile rootDir + "/public/vendor/bootstrap-wysihtml5/bootstrap-wysihtml5.js"
   js.addFile rootDir + "/public/vendor/bootstrap-wysihtml5/advanced.js"
+
+  css.addFile rootDir + "/client/styles/layout.styl"
 
 # Add routes and real application logic
 require("./routes") app
