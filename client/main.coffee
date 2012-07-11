@@ -4,21 +4,13 @@ helpers = NS "Edulaboro.helpers"
 models = NS "Edulaboro.models"
 
 $ ->
-    
-  # car = new models.Cars
-
-  # button = new views.Button model: car
-  # button.render()
-  # $(".container").append button.el
-
-  # carview = new views.CountView model: car
-  # carview.render()
-  # $(".container").append carview.el
   
-  editorToolbar = new views.WysihtmlToolbar
-  editorToolbar.render()
-  $(".wysihtml5-container").append editorToolbar.el
+  editorModel = new models.Editors
 
-  editor = new views.WysihtmlForm
+  topmenu = new views.Topmenu model: editorModel
+  topmenu.render()
+  $(topmenu.el).insertBefore ".container"
+
+  editor = new views.WysihtmlEditor model: editorModel
   editor.render()
-  $(".wysihtml5-container").append editor.el
+  $(".container").append editor.el
