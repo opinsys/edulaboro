@@ -6,11 +6,21 @@ class views.WysihtmlEditor extends Edulaboro.View
 
   constructor: ->
     super
-    this.model.on "change", =>
-      if this.model.get("mode") is "no_editor"
+    this.model.on "change:mode", =>
+      console.log "Editor: "+this.model.get("create_editor")
+      console.log "Mode: "+ this.getModelMode()
+      if this.getModelMode() is "no_editor"
         @$el.addClass "display_none"
         @$el.removeClass "display_block"
-      else
+      else if this.getModelMode() is "editor"
+        if !@editorInstance
+          @editorInstance = @$("#js-wysihtml5-textarea").wysihtml5
+            toolbar:      "wysihtml5-toolbar"
+            parserRules:  wysihtml5ParserRules
+            autoLink: true
+            style: true
+            html: true
+
         @$el.addClass "display_block"
         @$el.removeClass "display_none"
 
@@ -19,11 +29,14 @@ class views.WysihtmlEditor extends Edulaboro.View
     "click a.js-save-document-button": "saveDocument"
 
   cancelDocument: ->
-    if this.model.get("mode") is "editor"
+    if this.getModelMode() is "editor"
       this.model.set mode: "no_editor"
 
   saveDocument: ->
     alert @$("#js-wysihtml5-textarea").val()
+
+  getModelMode: ->
+    return this.model.get("mode")
 
   render: ->
     @$el.html @renderTemplate "wysihtml5-editor"
