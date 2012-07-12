@@ -7,8 +7,6 @@ class views.WysihtmlEditor extends Edulaboro.View
   constructor: ->
     super
     this.model.on "change:mode", =>
-      console.log "Editor: "+this.model.get("create_editor")
-      console.log "Mode: "+ this.getModelMode()
       if this.getModelMode() is "no_editor"
         @$el.addClass "display_none"
         @$el.removeClass "display_block"
@@ -33,10 +31,9 @@ class views.WysihtmlEditor extends Edulaboro.View
       this.model.set mode: "no_editor"
 
   saveDocument: ->
-    alert @$("#js-wysihtml5-textarea").val()
-
-  getModelMode: ->
-    return this.model.get("mode")
+    @title = @$(".document-name").val()
+    @val = @$("#js-wysihtml5-textarea").val() 
+    this.model.saveDocument @title, @val
 
   render: ->
     @$el.html @renderTemplate "wysihtml5-editor"
