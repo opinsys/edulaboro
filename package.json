@@ -7,6 +7,7 @@
   , "dependencies": {
       "backbone": ""
       , "coffee-script": ""
+      , "cradle": ""
       , "express": ""
       , "handlebars": ""
       , "hbs": ""
