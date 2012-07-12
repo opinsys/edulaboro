@@ -43,7 +43,7 @@ app.configure ->
   css.addFile rootDir + "/public/vendor/bootstrap/css/bootstrap.min.css"
   css.addFile rootDir + "/public/vendor/bootstrap/css/bootstrap-responsive.min.css"
   css.addFile rootDir + "/public/vendor/bootstrap-wysihtml5/bootstrap-wysihtml5.css"
-  
+
   js.addFile rootDir + "/public/vendor/bootstrap-wysihtml5/wysihtml5.js"
   js.addFile rootDir + "/public/vendor/bootstrap/js/bootstrap.min.js"
   js.addFile rootDir + "/public/vendor/bootstrap-wysihtml5/bootstrap-wysihtml5.js"
