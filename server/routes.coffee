@@ -23,7 +23,7 @@ db = new cradle.Connection().database dbName
 #   all:
 #     map: (doc) ->
 #       if doc.type is "document" 
-#         emit doc._id, doc
+#         emit doc.type, title: doc.title, document: doc.doc
 
 # db.get "test", (err,doc) ->
 #   if err
@@ -43,20 +43,13 @@ readTemplateStrings = ->
 
   console.log clientTemplates
 
-getAllDocuments = ->
-  response = {}
-  db.view 'getDocuments/all', (err, res) ->
-    if err
-      response = err
-    else
-      response = res
-  return response
+getAllDocuments = (cb) ->
+  db.view 'getDocuments/all', cb
 
 module.exports = (app) ->
 	app.get "/", (req, res) ->
 		res.render "index",
       clientTemplates: readTemplateStrings()
-      documentResponse: getAllDocuments()
 
   # Save editor data to Couch DB
   # TODO: Validate data, add unique id, add proper error messages etc.
@@ -71,6 +64,15 @@ module.exports = (app) ->
         else
           console.log res
 
-  # TODO: Everything :)
+  # TODO: Lots of things...
   app.get "/documents", (req, res) ->
-    console.log req
+    getAllDocuments (err, documents) ->
+      if err
+        res.json
+          error: err
+      else
+        res.json
+          alldocs: documents
+
+  app.get "/document:id", (req, res) ->
+    res.send "aaaa"
