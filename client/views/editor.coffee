@@ -35,5 +35,8 @@ class views.WysihtmlEditor extends Edulaboro.View
     @val = @$("#js-wysihtml5-textarea").val() 
     this.model.saveDocument @title, @val
 
+  getModelMode: ->
+    return this.model.get("mode")
+
   render: ->
     @$el.html @renderTemplate "wysihtml5-editor"
