@@ -5,6 +5,7 @@ models = NS "Edulaboro.models"
 
 $ ->
   editorModel = new models.Editors
+  documentCollection = new models.Documents
 
   topmenu = new views.Topmenu model: editorModel
   topmenu.render()
@@ -14,3 +15,8 @@ $ ->
     el: ".js-new-document-container"
     model: editorModel
   editor.render()
+
+  documents = new views.Documents
+    el: ".all-documents"
+    collection: documentCollection
+  documents.render()
