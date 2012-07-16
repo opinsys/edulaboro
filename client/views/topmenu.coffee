@@ -25,12 +25,12 @@ class views.Topmenu extends Edulaboro.View
     if this.getModelMode() is "no_editor"
       this.model.set 
         mode: "editor"
-
-    else if this.getModelMode() is "no_editor"
-      this.model.set mode: "editor"
+        newDocument: true
 
     else if this.getModelMode() is "editor"
-      this.model.set mode: "no_editor"
+      this.model.set 
+        mode: "no_editor"
+        newDocument: false
       
 
   getModelMode: ->

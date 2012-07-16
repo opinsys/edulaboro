@@ -1,9 +1,9 @@
-<a href="#" class="btn js-fetch-document-button">FETCH</a>
 <div>STUFF:
   <ul>
-  {{#each alldocs}}
-    <li>Title: {{{value.title}}}</li>
-    <li>DOC: {{{value.document}}}</li> 
+  {{#each documents}}
+    <li><h1>{{{this.value.title}}}</h1></li>
+    <li>{{{this.value.document}}}</li> 
+    <li><button class="btn js-get-document-btn" id="{{{this.id}}}">Edit</button></li>
   {{/each}} 
   </ul>
 </div>
