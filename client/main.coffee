@@ -4,21 +4,33 @@ helpers = NS "Edulaboro.helpers"
 models = NS "Edulaboro.models"
 
 $ ->
-  editorModel = new models.Editor
+  editorEditModel = new models.Editor
+  editorNewDocumentModel = new models.Editor
   documentCollection = new models.Documents
+  documentModel = new models.Document
 
-  topmenu = new views.Topmenu model: editorModel
+  topmenu = new views.Topmenu 
+    model: editorNewDocumentModel
   topmenu.render()
   $(topmenu.el).insertBefore ".container"
 
-  editor = new views.WysihtmlEditor 
-    el: ".js-new-document-container"
+  # This is ugly and need to do prettier
+  editorEditView = new views.EditWysihtmlEditor 
+    el: ".js-edit-document-container"
     collection: documentCollection
-    model: editorModel
-  editor.render()
+    model: editorEditModel
+  editorEditView.render()
+
+# This is ugly and need to do prettier
+  editorNewDocumentView = new views.NewWysihtmlEditor 
+    el: ".js-new-document-container"
+    model: editorNewDocumentModel
+    documentmodel: documentModel
+    collection: documentCollection 
+  editorNewDocumentView.render()
 
   documents = new views.Documents
     el: ".all-documents"
     collection: documentCollection
-    model: editorModel
+    model: editorEditModel
   documents.render()
