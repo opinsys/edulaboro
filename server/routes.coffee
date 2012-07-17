@@ -54,7 +54,7 @@ module.exports = (app) ->
   # Save editor data to Couch DB
   # TODO: Validate data, add unique id, add proper error messages etc.
   app.post "/documents", (req, res) ->
-    db.save req.body.documentTitle,
+    db.save "",
       type: "document"
       title: req.body.documentTitle
       doc: req.body.documentText,
@@ -75,12 +75,13 @@ module.exports = (app) ->
           alldocs: documents
 
   # TODO: Lots of things...
-  app.get "/document[/id]", (req, res) ->
+  app.get "/document/:id", (req, res) ->
+    console.log req.body
     res.send "aaaa"
 
   # TODO: Lots of things...
-  app.put "/documents/id", (req, res) ->
-    db.merge req.body.documentTitle,
+  app.put "/documents", (req, res) ->
+    db.merge req.body.id,
       title: req.body.documentTitle
       doc: req.body.documentText,
       (err, res) ->
