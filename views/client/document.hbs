@@ -1,13 +1,9 @@
-<div>
   <ul>
-  {{#each documents}}
     <li>
       <h1 class="document-title">{{{this.value.title}}}</h1> 
       <div class="document-body">{{{this.value.document}}}</div>
+      <button class="btn js-close-document-btn close-document-btn" id="{{{this.id}}}"><i class="icon-remove"></i></button>
       <button class="btn js-get-document-btn edit-document-btn" id="{{{this.id}}}"><i class="icon-edit"></i>Edit</button>
-      <button class="btn js-view-document-btn view-document-btn" id="{{{this.id}}}"><i class="icon-eye-open"></i>View</button>
       <button class="btn btn-danger js-remove-document-btn remove-document-btn" id="{{{this.id}}}"><i class="icon-remove"></i>Remove</button>
     </li>
-  {{/each}} 
   </ul>
-</div>

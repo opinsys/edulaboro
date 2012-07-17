@@ -7,33 +7,53 @@ class views.Documents extends Edulaboro.View
   constructor: ->
     super
     @.collection.on "change", =>
+      console.log "Collection changed"
       @render()
     @.collection.on "reset", => 
       @render()
-    @.model.on "change:mode", =>
-      if @.model.get("mode") is "editor" and @.model.get("newDocument") and @.model.get("id") isnt ""
-        # @.collection.add
-        console.log "Mode changed in documents view"
 
+    @.collection.on "add", =>
+      console.log "New model added!"
+      @render()
 
     @.collection.fetch()
 
   events: ->
     "click button.js-get-document-btn": "editDocument"
-
-  fetchDoc: ->
-    @render()
+    "click button.js-view-document-btn": "viewDocument"
+    "click button.js-remove-document-btn": "removeDocument"
 
   editDocument: (event) ->
-    # this is bad and it breaks stuff, need to FIX IT
-    @.model.set mode:"no_editor"
-    @document = @.collection.get(event.currentTarget.id).toJSON()
+    # This is ugly and need to do prettier
+    @buttonId = event.currentTarget.id
+    @buttonLocation = @$("#"+@buttonId+"").position()
+    @.model.set 
+      mode:"no_editor"
+      buttonLocation: @buttonLocation
+    @document = @getCurrentModel(event).toJSON()
     @.model.set
-      newDocument: false
       documentTitle: @document.value.title
       documentText: @document.value.document
       id: @document.id
       mode: "editor"
+
+  viewDocument: (event) ->
+    @document = @getCurrentModel(event)
+    @documentView = new views.Document
+      model: @document
+    $("body").append @documentView.el
+    # @$(".js-view-document-btn").attr "disabled", "disabled"
+
+  removeDocument: (event) ->
+    console.log "Remove document with id: "+ event.currentTarget.id
+    if confirm "Remove document with id: "+ event.currentTarget.id
+      alert "DESTROY!"
+    else
+      alert "NÄÄH"
+
+  getCurrentModel: (event) ->
+    @buttonId = event.currentTarget.id
+    return @.collection.get(@buttonId)
 
   render: ->
     if @.collection.isFetched
