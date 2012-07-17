@@ -4,24 +4,30 @@ class models.Editor extends Backbone.Model
 
   defaults:
     mode: "no_editor"
-    id: ""
     documentTitle: "Untitled Document"
     documentText: ""
 
   url: "/documents"
 
   saveDocument: (title, text) ->
-    @save
-      documentTitle: title
-      documentText: text,
-      success: (response) -> 
-        console.log response
-    console.log @.toJSON()
+    if title isnt "" and text isnt ""
+      @save
+        documentTitle: title
+        documentText: text
+        success: -> 
+          console.log "YES"
+        error: ->
+          console.log "NO"
+      console.log @.toJSON()
+    else console.log "Title and Text can't be blank!"
 
 class models.Document extends Backbone.Model
   
   defaults:
     type: "document"
+    value:
+      title: "Untitled Document"
+      document: ""
 
   initialize: ->
     console.log 'Document model has been initialized'
