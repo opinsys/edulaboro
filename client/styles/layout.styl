@@ -31,10 +31,13 @@ h1
   button
     margin .5em
 
-.new-document-container
+.new-document-container, .edit-document-container
+  left 2em
   margin 1em auto
-  position relative
+  padding 2em
+  position absolute
   width 75%
+  z-index 9999
   .wysihtml5-form textarea
     height 350px
   .wysihtml5-form textarea, .wysihtml5-toolbar
@@ -44,3 +47,47 @@ h1
 
   .form-buttons
     margin .5em 0 0
+
+.all-documents
+  margin 0 auto
+  width 90%
+
+  ul
+    display block
+    margin 1em 0
+
+    li
+      margin 1em 0
+      padding .25em
+      & > *
+        margin .5em 0 0
+      button
+        padding-left 2em
+        position relative
+        i
+          left 10%
+          position absolute
+          top 25%
+
+.document
+  left 2em
+  height auto
+  margin 0 2em
+  padding 2em
+  position absolute
+  z-index 9999
+  button
+    margin-top 1em
+
+  .close-document-btn
+    border-radius 3em
+    height 30px
+    margin 0
+    position absolute
+    right -1.25em
+    top -1.25em
+    width 30px
+    .icon-remove
+      left 25%
+      position absolute
+      top 25%
