@@ -9,32 +9,30 @@ class views.Topmenu extends Edulaboro.View
     @o = {}
     @o.buttonName = "New Document"
 
-    this.model.on "change:mode", =>
-      if this.getModelMode() is "no_editor"
+    @.model.on "change:mode", =>
+      if @.getModelMode() is "no_editor"
         @o.buttonName = "New Document"
 
-      else if this.getModelMode() is "editor"
+      else if @.getModelMode() is "editor"
         @o.buttonName = "Close Document"
 
-      this.render() 
+      @.render() 
 
   events: ->
     "click button.js-addHideEditor": "addHideEditor"
 
   addHideEditor: ->
-    if this.getModelMode() is "no_editor"
-      this.model.set 
+    if @.getModelMode() is "no_editor"
+      @.model.set 
         mode: "editor"
-        newDocument: true
 
-    else if this.getModelMode() is "editor"
-      this.model.set 
+    else if @.getModelMode() is "editor"
+      @.model.set 
         mode: "no_editor"
-        newDocument: false
       
 
   getModelMode: ->
-    return this.model.get("mode")
+    return @.model.get("mode")
 
   render: ->
     @$el.html @renderTemplate "topmenu", @o
