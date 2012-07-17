@@ -14,7 +14,7 @@ css.bind app
 js.bind app
 
 app.configure "development", ->
-  # js.liveUpdate(css)
+  js.liveUpdate(css)
 
 app.configure ->
   app.use express.bodyParser()
@@ -51,6 +51,7 @@ app.configure ->
   css.addFile rootDir + "/public/vendor/bootstrap-wysihtml5/bootstrap-wysihtml5.css"
 
   css.addFile rootDir + "/client/styles/layout.styl"
+  css.addFile rootDir + "/client/styles/theme.styl"
 
 # Add routes and real application logic
 require("./routes") app
