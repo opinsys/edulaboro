@@ -37,11 +37,11 @@ class views.NewWysihtmlEditor extends Edulaboro.View
   events: ->
     "click a.js-cancel-document-button": "cancelDocument"
     "click a.js-save-document-button": "saveDocument"
+    "focus input.js-new-document-name": "selectInputText"
 
   cancelDocument: ->
     if @.getModelMode() is "editor"
-      @.model.set 
-        mode: "no_editor"
+      @.model.set mode: "no_editor"
 
   saveDocument: ->
     @title = @$(".js-new-document-name").val()
@@ -53,9 +53,12 @@ class views.NewWysihtmlEditor extends Edulaboro.View
         title: @title
         document: @val
 
+  selectInputText: ->
+    @$(".js-new-document-name").select()
+
+  
   getModelMode: ->
     return @.model.get("mode")
-
 
   render: ->
     @$el.html @renderTemplate "new-editor"
@@ -76,32 +79,32 @@ class views.EditWysihtmlEditor extends Edulaboro.View
             autoLink: true
             style: true
             html: true
-        @$el.css 
-          top: @.model.get("buttonLocation").top
         @$(".js-edit-document-name").val @.model.get("documentTitle")
         @editorInstance.data("wysihtml5").editor.setValue @.model.get("documentText")
         @$el.addClass "display_block"
         @$el.removeClass "display_none"
-        console.log @editorTop
 
 
   events: ->
     "click a.js-cancel-document-button": "cancelDocument"
-    "click a.js-save-document-button": "saveDocument"
+    "click a.js-save-edited-document-button": "saveEditedDocument"
 
   cancelDocument: ->
     if @.model.get("mode") is "editor"
       @.model.set mode: "no_editor"
+      @.options.helpermodel.set 
+        id: @.model.get("id")
+        viewRemoved: true
 
-  saveDocument: ->
+  saveEditedDocument: ->
     @title = @$(".js-edit-document-name").val()
     @val = @$("#js-edit-wysihtml5-textarea").val()
     @documentModel = @.collection.get @.model.get "id"
-    @documentModel.set 
+    @documentModel.set
       value:
-        title: @title
+        title: @title 
         document: @val
-    @.model.saveDocument @title, @val
+    @.model.saveEditedDocument @title, @val
     @.model.set 
         mode: "no_editor"
 
