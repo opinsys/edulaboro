@@ -9,27 +9,40 @@ class models.Editor extends Backbone.Model
 
   url: "/documents"
 
-  saveDocument: (title, text) ->
-    if title isnt "" and text isnt ""
+  saveDocument: (title, document) ->
+    if title isnt "" and document isnt ""
       @save
         documentTitle: title
-        documentText: text
+        documentText: document
         timestamp: new Date().getTime()
         success: -> 
           console.log "YES"
         error: ->
           console.log "NO"
+      console.log "Saved: "
       console.log @.toJSON()
-    else console.log "Title and Text can't be blank!"
+    else console.log "Title or document can't be blank!"
+
+  saveEditedDocument: (title, document) ->
+    if title isnt "" and document isnt ""
+      @save
+        documentTitle: title
+        documentText: document
+        editTimestamp: new Date().getTime()
+        success: -> 
+          console.log "YES"
+        error: ->
+          console.log "NO"
+      console.log "Edit Saved: "
+      console.log @.toJSON()
+    else console.log "Title or document can't be blank!"
 
 class models.Document extends Backbone.Model
   
   defaults:
     type: "document"
-    value:
-      timestamp: ""
+    value: 
       title: "Untitled Document"
-      document: ""
 
   initialize: ->
     console.log 'Document model has been initialized'
@@ -55,5 +68,10 @@ class models.Documents extends Backbone.Collection
 
   # We want to sort the collection in descending order with timestamp as id
   comparator: (model) ->
-    @temp = model.get("value")
-    return -@temp.timestamp
+    # this is bad FIXIT 
+    return -model.get("value").timestamp
+
+# Add "dummy model" for controlling views, this is quite ugly but we will go with this for now
+class models.ViewHelper extends Backbone.Model
+  defaults:
+    viewRemoved: false
