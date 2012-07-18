@@ -9,21 +9,25 @@ cradle = require "cradle"
 db = new cradle.Connection().database dbName
 
 # Check if a database exists
-# db.exists (err,exists) ->
-#   if err
-#     console.log err
-#   else if exists
-#     console.log "Database exists"
-#   else
-#     console.log "Database doesnt exist"
-#     db.create()
+db.exists (err,exists) ->
+  if err
+    console.log err
+  else if exists
+    console.log "Database exists"
+  else
+    console.log "Database doesnt exist"
+    db.create()
 
 # Just an example about Couch DB view
 # db.save "_design/getDocuments",
-#   all:
-#     map: (doc) ->
-#       if doc.type is "document" 
-#         emit doc.type, title: doc.title, document: doc.doc
+#    all:
+#      map: (doc) ->
+#       if doc.type is "document"
+#         emit doc._id, 
+#           revision: doc._rev
+#           timestamp: doc.timestamp
+#           title: doc.timestamp
+#           document: doc.doc
 
 # db.get "test", (err,doc) ->
 #   if err
@@ -52,18 +56,20 @@ module.exports = (app) ->
       clientTemplates: readTemplateStrings()
 
   # Save editor data to Couch DB
-  # TODO: Validate data, add unique id, add proper error messages etc.
+  # TODO: Validate data, add proper error messages etc.
   app.post "/documents", (req, res) ->
     db.save "",
       type: "document"
       title: req.body.documentTitle
-      doc: req.body.documentText,
+      doc: req.body.documentText
+      timestamp: req.body.timestamp,
       (err, res) ->
         if err
           console.log err
         else
           console.log res
 
+  # Get all documents
   # TODO: Lots of things...
   app.get "/documents", (req, res) ->
     getAllDocuments (err, documents) ->
@@ -74,11 +80,13 @@ module.exports = (app) ->
         res.json
           alldocs: documents
 
+  # Get a document
   # TODO: Lots of things...
   app.get "/document/:id", (req, res) ->
     console.log req.body
     res.send "aaaa"
 
+  # Update a document 
   # TODO: Lots of things...
   app.put "/documents", (req, res) ->
     db.merge req.body.id,
@@ -89,3 +97,7 @@ module.exports = (app) ->
           console.log err
         else
           console.log res
+
+  # TODO: Lots of things...
+  app.delete "/documents/:id", (req, res) ->
+    console.log req.params.id
