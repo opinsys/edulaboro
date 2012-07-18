@@ -8,6 +8,7 @@ $ ->
   editorNewDocumentModel = new models.Editor
   documentCollection = new models.Documents
   documentModel = new models.Document
+  viewHelperModel = new models.ViewHelper
 
   topmenu = new views.Topmenu 
     model: editorNewDocumentModel
@@ -19,6 +20,7 @@ $ ->
     el: ".js-edit-document-container"
     collection: documentCollection
     model: editorEditModel
+    helpermodel: viewHelperModel
   editorEditView.render()
 
 # This is ugly and need to do prettier
@@ -33,4 +35,5 @@ $ ->
     el: ".all-documents"
     collection: documentCollection
     model: editorEditModel
+    helpermodel: viewHelperModel
   documents.render()
