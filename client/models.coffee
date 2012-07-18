@@ -14,6 +14,7 @@ class models.Editor extends Backbone.Model
       @save
         documentTitle: title
         documentText: text
+        timestamp: new Date().getTime()
         success: -> 
           console.log "YES"
         error: ->
@@ -26,6 +27,7 @@ class models.Document extends Backbone.Model
   defaults:
     type: "document"
     value:
+      timestamp: ""
       title: "Untitled Document"
       document: ""
 
@@ -38,9 +40,11 @@ class models.Documents extends Backbone.Collection
   model: models.Document
   url: "/documents"
 
+  # We want to wait that all the models are created before render our collection
   initialize: ->
     @.isFetched = false
     @.bind "reset", @.onReset, @
+    console.log "isFetched: "+ @.isFetched
 
   parse: (response) ->
     new models.Document response for response in response.alldocs
@@ -48,3 +52,8 @@ class models.Documents extends Backbone.Collection
   onReset: ->
     @.isFetched = true
     console.log "RESET TRUE"
+
+  # We want to sort the collection in descending order with timestamp as id
+  comparator: (model) ->
+    @temp = model.get("value")
+    return -@temp.timestamp
