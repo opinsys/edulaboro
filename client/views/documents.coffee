@@ -75,12 +75,20 @@ class views.Documents extends Edulaboro.View
     $("body").append @documentView.el
 
   removeDocument: (event) ->
-    @modelID = @$(".js-model-id-container").attr "id"
-    console.log "Remove document with id: "+ event.currentTarget.id
-    if confirm "Remove document with id: "+ event.currentTarget.id
-      alert "DESTROY!"
-    else
-      alert "NÄÄH"
+    @modelID = @getCurrentModelID(event)
+    console.log "Remove document with id: "+ @modelID
+    @document = @getCurrentModel(@modelID)
+    @document.destroy
+      success: (msg) ->
+        console.log "Model destroyed: "
+        console.log msg
+      error: (err) ->
+        console.log "Model destroy error: "
+        console.log err  
+    # if confirm "Remove document with id: "+ event.currentTarget.id
+    #   alert "DESTROY!"
+    # else
+    #   alert "NÄÄH"
 
   getCurrentModel: (modelID) ->
     return @.collection.get(modelID)
