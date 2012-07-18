@@ -32,10 +32,11 @@ h1
     margin .5em
 
 .new-document-container, .edit-document-container
-  left 2em
+  left 5%
   margin 1em auto
   padding 2em
-  position absolute
+  position fixed
+  top 5%
   width 75%
   z-index 9999
   .wysihtml5-form textarea
@@ -56,9 +57,10 @@ h1
     display block
     margin 1em 0
 
-    li
-      margin 1em 0
-      padding .25em
+    li.document-list-element
+      margin 1em 0 0
+      padding .25em .25em 1em
+      width auto
       & > *
         margin .5em 0 0
       button
@@ -70,11 +72,13 @@ h1
           top 25%
 
 .document
-  left 2em
+  left 5%
   height auto
-  margin 0 2em
-  padding 2em
-  position absolute
+  margin 0
+  padding 2.5%
+  position fixed
+  top 5%
+  width 85%
   z-index 9999
   button
     margin-top 1em
