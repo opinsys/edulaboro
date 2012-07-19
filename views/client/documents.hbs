@@ -1,15 +1,13 @@
-<div>
-  <ul>
-  {{#each documents}}
-    <li class="document-list-element">
-      <h1 class="document-title">{{{this.value.title}}}</h1> 
-      <div class="document-body">{{{this.value.document}}}</div>
-      <div class="button-container" id="{{{this.id}}}">
-        <button class="btn js-edit-document-btn edit-document-btn" data-model-id="{{{this.id}}}"><i class="icon-edit"></i>Edit</button>
-        <button class="btn js-view-document-btn view-document-btn" data-model-id="{{{this.id}}}"><i class="icon-eye-open"></i>View</button>
-        <button class="btn btn-danger js-remove-document-btn remove-document-btn" data-model-id="{{{this.id}}}"><i class="icon-remove"></i>Remove</button>
-      </div>
-    </li>
-  {{/each}} 
-  </ul>
-</div>
+<ul>
+{{#each documents}}
+  <li class="document-list-element">
+    <span class="document-info">Title: </span><h1 class="document-title">{{{this.value.title}}}</h1> 
+    <span class="document-info">Document: </span><div class="document-body">{{{this.value.document}}}</div>
+    <div class="button-container" id="{{{this.id}}}">
+      <button class="btn js-edit-document-btn edit-document-btn" data-model-id="{{{this.id}}}"><i class="icon-edit"></i>Edit</button>
+      <button class="btn js-view-document-btn view-document-btn" data-model-id="{{{this.id}}}"><i class="icon-eye-open"></i>View</button>
+      <button class="btn btn-danger js-remove-document-btn remove-document-btn" data-model-id="{{{this.id}}}"><i class="icon-remove"></i>Remove</button>
+    </div>
+  </li>
+{{/each}} 
+</ul>
