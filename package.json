@@ -1,6 +1,6 @@
 {
     "name": "edulaboro"
-  , "version": "0.1"
+  , "version": "0.1.0"
   , "description": "Collaborative editing of teaching materials"
   , "author": "Janne Saarela <janne.saarela@opinsys.fi>"
   , "repository": { "type": "git", "url": "https://github.com/opinsys/edulaboro" }
