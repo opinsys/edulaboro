@@ -14,6 +14,9 @@ body
 h1
   font-size 200%
 
+h2
+  font-size 150%
+
 .display_none
   display none !important
 
@@ -23,13 +26,16 @@ h1
 .container
   margin 0 auto
   width 100%
+  h1.site-title
+    font-size 300%
+    margin 0 5%
 
 .topmenu
   height 50px
   width 100%
 
   button
-    margin .5em
+    margin .5em .5em .5em 5%
 
 .new-document-container, .edit-document-container
   left 5%
@@ -52,6 +58,11 @@ h1
 .all-documents
   margin 0 auto
   width 90%
+  .document-info
+    display block
+    font-size 80%
+    margin 1em 0 0
+    text-transform uppercase
 
   ul
     display block
@@ -61,8 +72,8 @@ h1
       margin 1em 0 0
       padding .25em .25em 1em
       width auto
-      & > *
-        margin .5em 0 0
+      .document-body
+        margin-bottom 1em
       button
         padding-left 2em
         position relative
@@ -95,3 +106,7 @@ h1
       left 25%
       position absolute
       top 25%
+
+.all-documents, .document
+  .document-body p
+    margin-bottom 0.5em
