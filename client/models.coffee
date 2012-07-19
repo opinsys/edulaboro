@@ -68,8 +68,7 @@ class models.Documents extends Backbone.Collection
 
   # We want to sort the collection in descending order with timestamp as id
   comparator: (model) ->
-    # this is bad FIXIT 
-    return -model.get("value").timestamp
+    return -model.toJSON().value.timestamp
 
 # Add "dummy model" for controlling views, this is quite ugly but we will go with this for now
 class models.ViewHelper extends Backbone.Model
@@ -77,4 +76,3 @@ class models.ViewHelper extends Backbone.Model
     viewRemoved: false
     closeAllOtherViews: false
 
-    
