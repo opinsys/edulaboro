@@ -11,16 +11,17 @@ Edulaboro uses https://github.com/jhollingworth/bootstrap-wysihtml5/ as editor.
 ## Installing 
 
 Install Node.js 0.6.x  and CouchDB (tested with version 1.2.0)
-  git clone https://github.com/opinsys/edulaboro.git
-  cd edulaboro
+    
+    git clone https://github.com/opinsys/edulaboro.git
+    cd edulaboro
 
 Install dependencies
 
-  npm install
+    npm install
 
 Setup config.json
   
-  youreditor config.json
+    youreditor config.json
 
 ## Hacking and running server 
 
@@ -28,7 +29,7 @@ Before running server, remember to create a Couch DB view -> see server/routes.c
 
 Run server
   
-  node server
+    node server
 
 And navigate to http://localhost:8000/
 
