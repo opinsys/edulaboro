@@ -1,12 +1,22 @@
-dbHost = "127.0.0.1"
-dbport = 5984
-dbName = "test"
-
 rootDir = __dirname + "/../"
 fs = require "fs"
 cradle = require "cradle"
 
-db = new cradle.Connection().database dbName
+dbDefaults =
+  couchDBPort: 5984
+  couchDBHost: "127.0.0.1"
+  couchDBName: "test"
+
+try
+  config = JSON.parse fs.readFileSync rootDir + "config.json"
+catch e
+  config = {}
+  console.error "Couldn't load config.json. Using dbDefaults."
+
+for k, v of dbDefaults
+  config[k] ?= v
+
+db = new cradle.Connection().database config.couchDBName
 
 # Check if a database exists
 db.exists (err,exists) ->
@@ -16,9 +26,13 @@ db.exists (err,exists) ->
     console.log "Database exists"
   else
     console.log "Database doesnt exist"
+    # TODO:
+    # This crashes at the moment when running app first time
     db.create()
 
-# Just an example about Couch DB view
+# TODO: make this automatic at first run and don't touch it after it :)
+# Example of Couch DB view to get all documents and related data
+# Create this when first time running Couch DB
 # db.save "_design/getDocuments",
 #    all:
 #      map: (doc) ->
@@ -26,7 +40,7 @@ db.exists (err,exists) ->
 #         emit doc._id, 
 #           revision: doc._rev
 #           timestamp: doc.timestamp
-#           title: doc.timestamp
+#           title: doc.title
 #           document: doc.doc
 
 # db.get "test", (err,doc) ->
@@ -98,6 +112,20 @@ module.exports = (app) ->
         else
           console.log res
 
+  # Delete a document
   # TODO: Lots of things...
   app.delete "/documents/:id", (req, res) ->
     console.log req.params.id
+    console.log req.headers.revision
+    db.remove req.params.id, req.headers.revision,
+      (err, response) ->
+        if err
+          res.json
+            error: err
+          console.log err
+        else
+          res.json
+            reponse: response 
+          console.log response
+
+

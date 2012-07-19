@@ -6,6 +6,18 @@ fs = require "fs"
 rootDir = __dirname + "/../"
 clientTmplDir = rootDir + "/views/client/"
 
+defaults =
+  listenPort: 8000
+
+try
+  config = JSON.parse fs.readFileSync rootDir + "config.json"
+catch e
+  config = {}
+  console.error "Couldn't load config.json. Using defaults."
+
+for k, v of defaults
+  config[k] ?= v
+
 app = express.createServer()
 css = piler.createCSSManager()
 js = piler.createJSManager()
@@ -14,7 +26,7 @@ css.bind app
 js.bind app
 
 app.configure "development", ->
-  js.liveUpdate(css)
+  # js.liveUpdate(css)
 
 app.configure ->
   app.use express.bodyParser()
@@ -56,5 +68,5 @@ app.configure ->
 # Add routes and real application logic
 require("./routes") app
 
-app.listen 8000, ->
-	console.log "Listening port 8000"  
+app.listen config.listenPort, ->
+	console.log "Listening port: #{ config.listenPort }"  
