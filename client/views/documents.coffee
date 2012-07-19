@@ -8,21 +8,30 @@ class views.Documents extends Edulaboro.View
     super
     @.collection.on "change", =>
       console.log "Collection changed"
-      @.collection.fetch()
+      # @.collection.fetch()
       @render()
     
     @.collection.on "reset", => 
       @render()
 
+    # There's sometimes a bug with this when you add more than one new document: 
+    # -> all added documents after 1st one won't render automatically but they are going to db correctly
     @.collection.on "add", =>
       console.log "New model added!"
+      # We need to fetch to get the id of the new document (it would be better to get only that one new document from the db, yes...)
       @.collection.fetch()
       @render()
 
+    @.collection.on "destroy", =>
+      @render() 
+
     @.collection.fetch()
 
+    @.options.helpermodel.on "change:closeAllOtherViews", => 
+      console.log "closeAllOtherViews Changed to: " + @.options.helpermodel.get("closeAllOtherViews")
+
     @.options.helpermodel.on "change:viewRemoved", =>
-      console.log "@.options.helpermodel changed!"
+      console.log "@.options.helpermodel viewRemoved changed to: "+ @.options.helpermodel.get("viewRemoved")
       # Enable the disabled buttons when closing document or eritor view
       if @.options.helpermodel.get("viewRemoved") and @.options.helpermodel.get("id") isnt ""
         @modelButtons = @$("#"+@.options.helpermodel.get("id")+"").children("button")
@@ -41,6 +50,10 @@ class views.Documents extends Edulaboro.View
     "click button.js-remove-document-btn": "removeDocument"
 
   editDocument: (event) ->
+    # Close all other views before opening new one
+    @.options.helpermodel.set
+      closeAllOtherViews: true
+    
     @modelID = @getCurrentModelID(event)
     
     @modelButtons = @$("#"+@modelID+"").children("button")
@@ -51,6 +64,7 @@ class views.Documents extends Edulaboro.View
       mode:"no_editor"
     
     @document = @getCurrentModel(@modelID).toJSON()
+    console.log "closeAllOtherViews: " + @.options.helpermodel.get("closeAllOtherViews")
     
     @.model.set
       documentTitle: @document.value.title
@@ -59,6 +73,10 @@ class views.Documents extends Edulaboro.View
       mode: "editor"
 
   viewDocument: (event) ->
+    # Close all other views before opening new one
+    @.options.helpermodel.set
+      closeAllOtherViews: true
+    # Disable the view related buttons when opening a Document view
     @modelID = @getCurrentModelID(event)
     @modelButtons = @$("#"+@modelID+"").children("button")
     @modelButtons.each (i, element) =>
@@ -76,19 +94,22 @@ class views.Documents extends Edulaboro.View
 
   removeDocument: (event) ->
     @modelID = @getCurrentModelID(event)
-    console.log "Remove document with id: "+ @modelID
+    console.log "Delete document with id: "+ @modelID
     @document = @getCurrentModel(@modelID)
-    @document.destroy
-      success: (msg) ->
-        console.log "Model destroyed: "
-        console.log msg
-      error: (err) ->
-        console.log "Model destroy error: "
-        console.log err  
-    # if confirm "Remove document with id: "+ event.currentTarget.id
-    #   alert "DESTROY!"
-    # else
-    #   alert "NÄÄH"
+
+    # For now lets do model destroy confirmation just with confirm (it's ugly and wrong, yes...)
+    if confirm "Delete document with title: "+ @document.toJSON().value.title + " \nID: "+ @modelID
+      @document.destroy
+        headers:
+          revision: @document.toJSON().value.revision
+        success: (msg) ->
+          console.log "Document destroyed: "
+          console.log msg
+        error: (err) ->
+          console.log "Document destroy error: "
+          console.log err  
+    else
+      # Do nothing
 
   getCurrentModel: (modelID) ->
     return @.collection.get(modelID)
