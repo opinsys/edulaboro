@@ -15,14 +15,24 @@ class views.Topmenu extends Edulaboro.View
 
       else if @.getModelMode() is "editor"
         @o.buttonName = "Close Document"
-
+        @.options.helpermodel.set
+          closeAllOtherViews: false
+      
       @.render() 
+
+    @.options.helpermodel.on "change:closeAllOtherViews", =>
+      # Close editor before opening any other view
+      if @.options.helpermodel.get("closeAllOtherViews") and @.getModelMode() is "editor"
+        @.model.set 
+          mode: "no_editor"
 
   events: ->
     "click button.js-addHideEditor": "addHideEditor"
 
   addHideEditor: ->
     if @.getModelMode() is "no_editor"
+      @.options.helpermodel.set
+        closeAllOtherViews: true
       @.model.set 
         mode: "editor"
 
