@@ -56,7 +56,7 @@ class models.Documents extends Backbone.Collection
   # We want to wait that all the models are created before render our collection
   initialize: ->
     @.isFetched = false
-    @.bind "reset", @.onReset, @
+    @.on "reset", @.onReset, @
     console.log "isFetched: "+ @.isFetched
 
   parse: (response) ->
@@ -75,3 +75,6 @@ class models.Documents extends Backbone.Collection
 class models.ViewHelper extends Backbone.Model
   defaults:
     viewRemoved: false
+    closeAllOtherViews: false
+
+    
