@@ -24,14 +24,12 @@ class views.NewWysihtmlEditor extends Edulaboro.View
         
         @$(".js-new-document-name").val @.model.get("documentTitle")
         @editorInstance.data("wysihtml5").editor.setValue @.model.get("documentText")
-        
-        console.log "Editor Model: " 
-        console.log @.model.toJSON()
-        console.log "Document Model: " 
-        console.log @.options.documentmodel.toJSON()
 
         @$el.addClass "display_block"
         @$el.removeClass "display_none"
+
+        @.options.helpermodel.set
+          closeAllOtherViews: false
 
 
   events: ->
@@ -83,6 +81,21 @@ class views.EditWysihtmlEditor extends Edulaboro.View
         @editorInstance.data("wysihtml5").editor.setValue @.model.get("documentText")
         @$el.addClass "display_block"
         @$el.removeClass "display_none"
+        
+        @.options.helpermodel.set
+          closeAllOtherViews: false
+        console.log "I'am editor and my helper model is:"
+        console.log @.options.helpermodel.toJSON()
+
+    @.options.helpermodel.on "change:closeAllOtherViews", =>
+      console.log "closeAllOtherViews in Editor view: " + @.options.helpermodel.get("closeAllOtherViews")
+      # Close view before opening new one
+      if @.options.helpermodel.get("closeAllOtherViews")
+        @.options.helpermodel.set
+          id: @model.get("id")
+          viewRemoved: true
+        @.model.set 
+          mode: "no_editor"
 
 
   events: ->
@@ -101,15 +114,23 @@ class views.EditWysihtmlEditor extends Edulaboro.View
     @val = @$("#js-edit-wysihtml5-textarea").val()
     @documentModel = @.collection.get @.model.get "id"
     @documentModel.set
+      id: @documentModel.get("id")
       value:
+        timestamp: @documentModel.toJSON().value.timestamp
+        revision: @documentModel.toJSON().value.revision
         title: @title 
         document: @val
     @.model.saveEditedDocument @title, @val
     @.model.set 
         mode: "no_editor"
 
+    console.log "model in save-edit: "
+    console.log @documentModel.toJSON()
+
   getModelMode: ->
     return @.model.get("mode")
 
   render: ->
     @$el.html @renderTemplate "edit-document-editor"
+
+
