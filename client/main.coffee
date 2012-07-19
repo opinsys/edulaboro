@@ -4,6 +4,7 @@ helpers = NS "Edulaboro.helpers"
 models = NS "Edulaboro.models"
 
 $ ->
+  # TODO: These model/collection things need to rethink
   editorEditModel = new models.Editor
   editorNewDocumentModel = new models.Editor
   documentCollection = new models.Documents
@@ -12,6 +13,7 @@ $ ->
 
   topmenu = new views.Topmenu 
     model: editorNewDocumentModel
+    helpermodel: viewHelperModel
   topmenu.render()
   $(topmenu.el).insertBefore ".container"
 
@@ -29,6 +31,7 @@ $ ->
     model: editorNewDocumentModel
     documentmodel: documentModel
     collection: documentCollection 
+    helpermodel: viewHelperModel
   editorNewDocumentView.render()
 
   documents = new views.Documents
