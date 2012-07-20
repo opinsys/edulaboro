@@ -16,9 +16,11 @@ class views.Documents extends Edulaboro.View
 
     # There's sometimes a bug with this when you add more than one new document: 
     # -> all added documents after 1st one won't render automatically but they are going to db correctly
+    # -> And sometimes same Document goes twice to db
     @.collection.on "add", =>
       console.log "New model added!"
-      # We need to fetch to get the id of the new document (it would be better to get only that one new document from the db, yes...)
+      # We need to fetch to get the id of the new document 
+      # (it would be better to get only that one new document from the db than get all of them every time, yes...)
       @.collection.fetch()
       @render()
 
@@ -28,8 +30,9 @@ class views.Documents extends Edulaboro.View
     @.collection.fetch()
 
     @.options.helpermodel.on "change:closeAllOtherViews", => 
-      console.log "closeAllOtherViews Changed to: " + @.options.helpermodel.get("closeAllOtherViews")
+      # console.log "closeAllOtherViews Changed to: " + @.options.helpermodel.get("closeAllOtherViews")
 
+    # TODO: This is really messy way to handle this -> Do this in the right way
     @.options.helpermodel.on "change:viewRemoved", =>
       console.log "@.options.helpermodel viewRemoved changed to: "+ @.options.helpermodel.get("viewRemoved")
       # Enable the disabled buttons when closing document or eritor view
@@ -51,6 +54,7 @@ class views.Documents extends Edulaboro.View
 
   editDocument: (event) ->
     # Close all other views before opening new one
+    # TODO: This is really messy way to handle this -> Do this in the right way
     @.options.helpermodel.set
       closeAllOtherViews: true
     
@@ -74,6 +78,7 @@ class views.Documents extends Edulaboro.View
 
   viewDocument: (event) ->
     # Close all other views before opening new one
+    # TODO: This is really messy way to handle this -> Do this in the right way
     @.options.helpermodel.set
       closeAllOtherViews: true
     # Disable the view related buttons when opening a Document view
@@ -124,3 +129,4 @@ class views.Documents extends Edulaboro.View
       console.log @.collection.toJSON()
     else
       console.log @.collection.isFetched
+

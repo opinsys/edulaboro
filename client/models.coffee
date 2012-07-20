@@ -70,7 +70,8 @@ class models.Documents extends Backbone.Collection
   comparator: (model) ->
     return -model.toJSON().value.timestamp
 
-# Add "dummy model" for controlling views, this is quite ugly but we will go with this for now
+# Add "dummy model" for controlling views, this is quite ugly and wrong but we will go with this for now
+# TODO: Do this in the right way
 class models.ViewHelper extends Backbone.Model
   defaults:
     viewRemoved: false

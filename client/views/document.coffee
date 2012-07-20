@@ -27,6 +27,7 @@ class views.Document extends Edulaboro.View
     @.options.helpermodel.on "change:closeAllOtherViews", =>
       console.log "closeAllOtherViews in Document view: " + @.options.helpermodel.get("closeAllOtherViews")
       # Close view before opening new one
+      # TODO: This is really messy way to handle this -> Do this in the right way
       if @.options.helpermodel.get("closeAllOtherViews")
         @.options.helpermodel.set
           viewRemoved: true
@@ -42,6 +43,7 @@ class views.Document extends Edulaboro.View
     "click button.js-remove-document-btn": "removeDocument"
 
   closeDocument: (event) ->
+  # TODO: This is really messy way to handle this -> Do this in the right way
     @.options.helpermodel.set
       viewRemoved: true
       id: @model.get("id")

@@ -28,6 +28,7 @@ class views.NewWysihtmlEditor extends Edulaboro.View
         @$el.addClass "display_block"
         @$el.removeClass "display_none"
 
+        # TODO: This is really messy way to handle this -> Do this in the right way
         @.options.helpermodel.set
           closeAllOtherViews: false
 
@@ -82,6 +83,7 @@ class views.EditWysihtmlEditor extends Edulaboro.View
         @$el.addClass "display_block"
         @$el.removeClass "display_none"
         
+        # TODO: This is really messy way to handle this -> Do this in the right way
         @.options.helpermodel.set
           closeAllOtherViews: false
         console.log "I'am editor and my helper model is:"
@@ -90,6 +92,7 @@ class views.EditWysihtmlEditor extends Edulaboro.View
     @.options.helpermodel.on "change:closeAllOtherViews", =>
       console.log "closeAllOtherViews in Editor view: " + @.options.helpermodel.get("closeAllOtherViews")
       # Close view before opening new one
+      # TODO: This is really messy way to handle this -> Do this in the right way
       if @.options.helpermodel.get("closeAllOtherViews")
         @.options.helpermodel.set
           id: @model.get("id")
@@ -103,6 +106,7 @@ class views.EditWysihtmlEditor extends Edulaboro.View
     "click a.js-save-edited-document-button": "saveEditedDocument"
 
   cancelDocument: ->
+    # TODO: This is really messy way to handle this -> Do this in the right way
     if @.model.get("mode") is "editor"
       @.model.set mode: "no_editor"
       @.options.helpermodel.set 
