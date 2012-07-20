@@ -6,7 +6,11 @@ Edulaboro is (going to be) a collaborative app to create teaching materials and 
 
 With this version (0.1) you can add, edit, view and remove documents.
 
-Edulaboro uses https://github.com/jhollingworth/bootstrap-wysihtml5/ as editor.
+Edulaboro uses:
+  * https://github.com/cloudhead/cradle/ as Couch DB client
+  * http://backbonejs.org/ as MV* Framework
+  * http://handlebarsjs.com/ as node.js template engine
+  * https://github.com/jhollingworth/bootstrap-wysihtml5/ as editor
 
 ## Installing 
 
@@ -26,12 +30,14 @@ Setup config.json
 ## Hacking and running server 
 
 Before running server, remember to create a Couch DB view -> see server/routes.coffee rows: 33 ->
+! At the moment app crashes if database doesn't exist when running the app first time
 
 Run server
   
     node server
 
-And navigate to http://localhost:8000/
+And navigate to http://localhost:8000/ 
+(Or to the port which you configured in config.json)
 
 # Copyright
 
