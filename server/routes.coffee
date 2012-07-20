@@ -26,13 +26,14 @@ db.exists (err,exists) ->
     console.log "Database exists"
   else
     console.log "Database doesnt exist"
-    # TODO:
+    # TODO: Wrap this in a callback function before doing anything else
     # This crashes at the moment when running app first time
     db.create()
 
-# TODO: make this automatic at first run and don't touch it after it :)
+# TODO: Make this automatic at first run and don't touch it after it :)
 # Example of Couch DB view to get all documents and related data
 # Create this when first time running Couch DB
+# Error message is : { error: 'not_found', reason: 'missing_named_view' } is view isn't in DB
 # db.save "_design/getDocuments",
 #    all:
 #      map: (doc) ->
